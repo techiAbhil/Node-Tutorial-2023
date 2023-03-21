@@ -26,7 +26,7 @@ const DeletePost = ({
 
 	const submitHandler = React.useCallback(async () => {
 		try {
-			const data: any = await axios.delete('/auth/register/' + post?.post_id);
+			const data: any = await axios.delete('/app/post/' + post?.post_id);
 			console.log('api response = ', data);
 			setShowLoader(false);
 			submitResponseHandler(true);

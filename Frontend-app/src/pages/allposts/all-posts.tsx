@@ -9,74 +9,23 @@ import {
 } from '@mui/material';
 import Box from '@mui/material/Box';
 import Container from '@mui/material/Container';
+import axios from 'axios';
 import { useCallback, useEffect, useState } from 'react';
 import { useNavigate } from 'react-router';
 import DefaultImg from '../../assets/black-panther.jpg';
 
-const STATIC_DATA = [
-	{
-		post_id: 1,
-		title: 'Post-1',
-		body: 'im just testing this out, im just testing this out, im just testing this out',
-	},
-	{
-		post_id: 2,
-		title: 'Post-2',
-		body: 'im just testing this out, im just testing this out, im just testing this out',
-	},
-	{
-		post_id: 3,
-		title: 'Post-3',
-		body: 'im just testing this out, im just testing this out, im just testing this out',
-	},
-	{
-		post_id: 4,
-		title: 'Post-4',
-		body: 'im just testing this out, im just testing this out, im just testing this out',
-	},
-	{
-		post_id: 5,
-		title: 'Post-5',
-		body: 'im just testing this out, im just testing this out, im just testing this out',
-	},
-	{
-		post_id: 6,
-		title: 'Post-6',
-		body: 'im just testing this out, im just testing this out, im just testing this out',
-	},
-	{
-		post_id: 7,
-		title: 'Post-7',
-		body: 'im just testing this out, im just testing this out, im just testing this out',
-	},
-	{
-		post_id: 8,
-		title: 'Post-8',
-		body: 'im just testing this out, im just testing this out, im just testing this out',
-	},
-	{
-		post_id: 9,
-		title: 'Post-9',
-		body: 'im just testing this out, im just testing this out, im just testing this out',
-	},
-	{
-		post_id: 10,
-		title: 'Post-10',
-		body: 'im just testing this out, im just testing this out, im just testing this out',
-	},
-];
-
-export interface IPost {
+interface IPost {
 	title: string;
 	body: string;
 	post_id: number;
+	users: any;
 }
 const TOAST_TIMER = 3000;
 export default function AllPosts() {
 	const nav = useNavigate();
 
 	const [error, setError] = useState<string | undefined>(undefined);
-	const [rows, setRows] = useState<IPost[]>([...STATIC_DATA]);
+	const [rows, setRows] = useState<IPost[]>([]);
 
 	const setErrorMsg = useCallback((error_msg: string) => {
 		setError(error_msg);
@@ -86,11 +35,14 @@ export default function AllPosts() {
 		}, TOAST_TIMER);
 	}, []);
 
+	const getAllPosts = useCallback(async () => {
+		const { posts }: any = await axios.get('/app/post/all');
+		setRows(posts);
+	}, []);
+
 	useEffect(() => {
 		try {
-			(async () => {
-				setRows(STATIC_DATA);
-			})();
+			getAllPosts();
 		} catch (e) {
 			setErrorMsg('Failed to load posts, please reload the page');
 		}
@@ -119,7 +71,12 @@ export default function AllPosts() {
 								return (
 									<Grid key={row.post_id} item xs={4}>
 										<Card
-											sx={{ maxWidth: 345, background: '#e2faec', padding: 2 }}
+											sx={{
+												maxWidth: 345,
+												height: 350,
+												background: '#e2faec',
+												padding: 2,
+											}}
 										>
 											<Box
 												display={'flex'}
@@ -147,7 +104,7 @@ export default function AllPosts() {
 													align="right"
 													pt={1}
 												>
-													- By John Doe
+													- By {row?.users?.first_name} {row?.users?.last_name}
 												</Typography>
 											</CardContent>
 										</Card>

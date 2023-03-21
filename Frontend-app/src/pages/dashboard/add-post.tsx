@@ -25,9 +25,21 @@ const AddPost = ({
 }) => {
 	const [showLoader, setShowLoader] = React.useState<boolean>(false);
 
-	const submitHandler = React.useCallback(async (values: any) => {
+	const addPostHandler = React.useCallback(async (values: any) => {
 		try {
-			const data: any = await axios.post('/auth/register', values);
+			const data: any = await axios.post('/app/post', values);
+			console.log('api response = ', data);
+			setShowLoader(false);
+			submitResponseHandler(true);
+		} catch (e: any) {
+			setShowLoader(false);
+			submitResponseHandler(false);
+		}
+	}, []);
+
+	const updatePostHandler = React.useCallback(async (values: any) => {
+		try {
+			const data: any = await axios.patch('/app/post', values);
 			console.log('api response = ', data);
 			setShowLoader(false);
 			submitResponseHandler(true);
@@ -45,7 +57,7 @@ const AddPost = ({
 					body: post ? post.body : '',
 					title: post ? post.title : '',
 				}}
-				onSubmit={submitHandler}
+				onSubmit={post ? updatePostHandler : addPostHandler}
 			>
 				{({ errors }) => {
 					return (

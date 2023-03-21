@@ -95,7 +95,7 @@ export default function ProfileMenu() {
 							color="error"
 							onClick={() => {
 								dispatch({ type: 'CLEAR_STATE' });
-								localStorage.removeItem('AUHT_USER');
+								localStorage.removeItem('AUTH_USER');
 								setIsOpenModal(false);
 								handleClose('/auth/login');
 							}}

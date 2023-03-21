@@ -23,7 +23,7 @@ export default function Login() {
 			setShowLoader(false);
 			if (data.success) {
 				dispatch({ type: 'SET_TOKEN', payload: data.token });
-				localStorage.setItem('AUHT_USER', data.token);
+				localStorage.setItem('AUTH_USER', data.token);
 				nav('/dashboard');
 			} else {
 				alert('Invalid Login Credentials...!');

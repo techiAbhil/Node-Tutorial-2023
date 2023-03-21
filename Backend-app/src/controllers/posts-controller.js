@@ -3,13 +3,13 @@ const { PrismaClient } = require('@prisma/client');
 const prisma = new PrismaClient();
 
 const addPost = async (req, res) => {
-	const params = req.body;
-
+	const { user, body } = req;
+	console.log('user = ', user);
 	const post = await prisma.posts.create({
 		data: {
-			body: params.body,
-			title: params.title,
-			user_id: 1,
+			body: body.body,
+			title: body.title,
+			user_id: user?.user_id,
 		},
 	});
 	res.status(201).json({
@@ -43,7 +43,7 @@ const deletePost = async (req, res) => {
 
 	const post = await prisma.posts.delete({
 		where: {
-			post_id: params.post_id,
+			post_id: +params.post_id,
 		},
 	});
 	res.status(200).json({
@@ -53,11 +53,11 @@ const deletePost = async (req, res) => {
 };
 
 const getPostByUser = async (req, res) => {
-	const params = req.params;
+	const { user } = req;
 
 	const posts = await prisma.posts.findMany({
 		where: {
-			user_id: 1,
+			user_id: user.user_id,
 		},
 	});
 	res.status(200).json({
@@ -69,7 +69,16 @@ const getPostByUser = async (req, res) => {
 
 const getAllPosts = async (req, res) => {
 	const posts = await prisma.posts.findMany({
-		include: { users: true },
+		include: {
+			users: {
+				select: {
+					email: true,
+					first_name: true,
+					last_name: true,
+					user_id: true,
+				},
+			},
+		},
 	});
 	res.status(200).json({
 		msg: 'Success...!',

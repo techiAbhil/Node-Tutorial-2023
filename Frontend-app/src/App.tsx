@@ -27,7 +27,7 @@ function App() {
 							<Route
 								path="dashboard"
 								element={
-									<ProtectedRoute token={appState.token}>
+									<ProtectedRoute>
 										<Dashboard />
 									</ProtectedRoute>
 								}
@@ -35,7 +35,7 @@ function App() {
 							<Route
 								path="posts"
 								element={
-									<ProtectedRoute token={appState.token}>
+									<ProtectedRoute>
 										<AllPosts />
 									</ProtectedRoute>
 								}

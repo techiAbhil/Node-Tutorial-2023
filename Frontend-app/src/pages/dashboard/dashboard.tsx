@@ -13,63 +13,11 @@ import {
 import Box from '@mui/material/Box';
 import Container from '@mui/material/Container';
 import Paper from '@mui/material/Paper';
-import { useCallback, useState } from 'react';
+import axios from 'axios';
+import { useCallback, useEffect, useState } from 'react';
 import { useNavigate } from 'react-router';
 import AddPost from './add-post';
 import DeletePost from './delete-post';
-
-const STATIC_DATA = [
-	{
-		post_id: 1,
-		title: 'Post-1',
-		body: 'im just testing this out, im just testing this out, im just testing this out',
-	},
-	{
-		post_id: 2,
-		title: 'Post-2',
-		body: 'im just testing this out, im just testing this out, im just testing this out',
-	},
-	{
-		post_id: 3,
-		title: 'Post-3',
-		body: 'im just testing this out, im just testing this out, im just testing this out',
-	},
-	{
-		post_id: 4,
-		title: 'Post-4',
-		body: 'im just testing this out, im just testing this out, im just testing this out',
-	},
-	{
-		post_id: 5,
-		title: 'Post-5',
-		body: 'im just testing this out, im just testing this out, im just testing this out',
-	},
-	{
-		post_id: 6,
-		title: 'Post-6',
-		body: 'im just testing this out, im just testing this out, im just testing this out',
-	},
-	{
-		post_id: 7,
-		title: 'Post-7',
-		body: 'im just testing this out, im just testing this out, im just testing this out',
-	},
-	{
-		post_id: 8,
-		title: 'Post-8',
-		body: 'im just testing this out, im just testing this out, im just testing this out',
-	},
-	{
-		post_id: 9,
-		title: 'Post-9',
-		body: 'im just testing this out, im just testing this out, im just testing this out',
-	},
-	{
-		post_id: 10,
-		title: 'Post-10',
-		body: 'im just testing this out, im just testing this out, im just testing this out',
-	},
-];
 
 export interface IPost {
 	title: string;
@@ -86,7 +34,16 @@ export default function Dashboard() {
 	const [error, setError] = useState<string | undefined>(undefined);
 	const [success, setSuccess] = useState<string | undefined>(undefined);
 
-	const [rows, setRows] = useState<IPost[]>([...STATIC_DATA]);
+	const [rows, setRows] = useState<IPost[]>([]);
+
+	const getPostsForUser = useCallback(async () => {
+		const { posts }: any = await axios.get('/app/post');
+		setRows(posts);
+	}, []);
+
+	useEffect(() => {
+		getPostsForUser();
+	}, []);
 
 	const setErrorMsg = useCallback((error_msg: string) => {
 		setError(error_msg);
@@ -106,6 +63,7 @@ export default function Dashboard() {
 
 	const addPostResponseHandler = useCallback((isSUccess: boolean) => {
 		if (isSUccess) {
+			getPostsForUser();
 			setOpenAddPost(false);
 			setSuccessMsg('Post has been successfully added...!');
 		} else {
@@ -115,6 +73,7 @@ export default function Dashboard() {
 
 	const updatePostHandler = useCallback((isSUccess: boolean) => {
 		if (isSUccess) {
+			getPostsForUser();
 			setUpdatePost(null);
 			setSuccessMsg('Post has been successfully updated...!');
 		} else {
@@ -124,7 +83,8 @@ export default function Dashboard() {
 
 	const deletePostHandler = useCallback((isSUccess: boolean) => {
 		if (isSUccess) {
-			setUpdatePost(null);
+			getPostsForUser();
+			setDeletePost(null);
 			setSuccessMsg('Post has been successfully deleted...!');
 		} else {
 			setErrorMsg('Something went wrong while deleting post...!');
@@ -141,6 +101,19 @@ export default function Dashboard() {
 				}}
 			>
 				<Container>
+					{error && (
+						<Alert severity="error">
+							<AlertTitle>Error</AlertTitle>
+							{error}
+						</Alert>
+					)}
+
+					{success && (
+						<Alert severity="success">
+							<AlertTitle>Success</AlertTitle>
+							{success}
+						</Alert>
+					)}
 					<Box
 						py={1.5}
 						display="flex"
@@ -236,20 +209,6 @@ export default function Dashboard() {
 				submitResponseHandler={deletePostHandler}
 				post={deletePost}
 			/>
-
-			{error && (
-				<Alert severity="error">
-					<AlertTitle>Error</AlertTitle>
-					{error}
-				</Alert>
-			)}
-
-			{success && (
-				<Alert severity="success">
-					<AlertTitle>Success</AlertTitle>
-					{success}
-				</Alert>
-			)}
 		</>
 	);
 }
