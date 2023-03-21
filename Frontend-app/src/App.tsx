@@ -2,7 +2,8 @@ import { ThemeProvider } from '@mui/material';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import Layout from './components/layout/layout';
 import PreLoginLayout from './components/pre-login-layout/pre-login-layout';
-import Dashboard from './pages/dashboar';
+import AllPosts from './pages/allposts/all-posts';
+import Dashboard from './pages/dashboard/dashboard';
 import Login from './pages/login';
 import Register from './pages/register';
 import Theme from './theme';
@@ -19,6 +20,7 @@ function App() {
 					</Route>
 					<Route path="/" element={<Layout />}>
 						<Route path="dashboard" element={<Dashboard />} />
+						<Route path="posts" element={<AllPosts />} />
 					</Route>
 				</Routes>
 			</BrowserRouter>
