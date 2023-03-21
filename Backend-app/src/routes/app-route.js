@@ -14,7 +14,7 @@ const {
 const schemaMiddleware = require('../validations/validation-middleware');
 
 route.post('/post', schemaMiddleware(addPostSchema), addPost);
-route.patch('/post', schemaMiddleware(updatePostSchema), updatePost);
+route.put('/post', schemaMiddleware(updatePostSchema), updatePost);
 route.delete('/post/:post_id', deletePost);
 route.get('/post', getPostByUser);
 route.get('/post/all', getAllPosts);

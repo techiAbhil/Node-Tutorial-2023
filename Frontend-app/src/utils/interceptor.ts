@@ -4,10 +4,10 @@ const imageHandlingAPIRoutes: string[] = ['/update-profile-pic'];
 axios.interceptors.request.use((req: any) => {
 	req.baseURL = import.meta.env.VITE_PUBLIC_BASE_URL;
 	req.headers = {
-		// 'access-control-allow-headers': '*',
+		'access-control-allow-headers': '*',
 		// 'Access-Control-Allow-Origin': '*',
 		'content-type': 'application/json',
-		// 'Access-Control-Allow-Methods': 'GET, OPTIONS, POST, PUT, PATCH, DELETE',
+		'Access-Control-Allow-Methods': 'GET, POST, PUT, PATCH, DELETE',
 	};
 	if (req.url.startsWith('/app/')) {
 		const token = localStorage.getItem('AUTH_USER');

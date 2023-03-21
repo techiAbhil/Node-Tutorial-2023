@@ -37,17 +37,23 @@ const AddPost = ({
 		}
 	}, []);
 
-	const updatePostHandler = React.useCallback(async (values: any) => {
-		try {
-			const data: any = await axios.patch('/app/post', values);
-			console.log('api response = ', data);
-			setShowLoader(false);
-			submitResponseHandler(true);
-		} catch (e: any) {
-			setShowLoader(false);
-			submitResponseHandler(false);
-		}
-	}, []);
+	const updatePostHandler = React.useCallback(
+		async (values: any) => {
+			try {
+				const data: any = await axios.put('/app/post', {
+					...values,
+					post_id: post?.post_id,
+				});
+				console.log('api response = ', data);
+				setShowLoader(false);
+				submitResponseHandler(true);
+			} catch (e: any) {
+				setShowLoader(false);
+				submitResponseHandler(false);
+			}
+		},
+		[post]
+	);
 
 	return (
 		<Dialog onClose={handleClose} open={open}>
