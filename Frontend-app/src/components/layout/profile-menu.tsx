@@ -6,6 +6,7 @@ import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
 import * as React from 'react';
 import { useNavigate } from 'react-router-dom';
+import AppContext from '../../hooks/app-context';
 import { COLOR_CODES } from '../../utils/constants';
 
 export default function ProfileMenu() {
@@ -20,6 +21,7 @@ export default function ProfileMenu() {
 		nav(navRoute);
 	};
 	const [isOpenModal, setIsOpenModal] = React.useState<boolean>(false);
+	const { dispatch } = React.useContext(AppContext);
 
 	return (
 		<div>
@@ -92,6 +94,7 @@ export default function ProfileMenu() {
 							variant="contained"
 							color="error"
 							onClick={() => {
+								dispatch({ type: 'CLEAR_STATE' });
 								localStorage.removeItem('AUHT_USER');
 								setIsOpenModal(false);
 								handleClose('/auth/login');

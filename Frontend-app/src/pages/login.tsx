@@ -8,6 +8,7 @@ import { Grid } from '@mui/material';
 import CircularProgress from '@mui/material/CircularProgress';
 import { Link, useNavigate } from 'react-router-dom';
 import CustomFormikField from '../components/CustomFormikField';
+import AppContext from '../hooks/app-context';
 import { COLOR_CODES } from '../utils/constants';
 // import { loginSchema } from '../validations/validation';
 
@@ -15,13 +16,14 @@ export default function Login() {
 	const nav = useNavigate();
 
 	const [showLoader, setShowLoader] = React.useState<boolean>(false);
-
+	const { dispatch } = React.useContext(AppContext);
 	const submitHandler = React.useCallback(async (values: any) => {
 		try {
 			const data: any = await axios.post('/auth/login', values);
 			setShowLoader(false);
 			if (data.success) {
-				localStorage.setItem('AUHT_USER', JSON.stringify(data));
+				dispatch({ type: 'SET_TOKEN', payload: data.token });
+				localStorage.setItem('AUHT_USER', data.token);
 				nav('/dashboard');
 			} else {
 				alert('Invalid Login Credentials...!');

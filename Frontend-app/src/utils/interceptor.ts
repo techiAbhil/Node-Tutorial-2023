@@ -12,7 +12,7 @@ axios.interceptors.request.use((req: any) => {
 
 	if (!req.url.startsWith('/auth/')) {
 		const token = localStorage.getItem('AUTH_TOKEN');
-		// req.headers.Authorization = `Bearer ${token}`;
+		req.headers.Authorization = `Bearer ${token}`;
 	}
 	return req;
 });

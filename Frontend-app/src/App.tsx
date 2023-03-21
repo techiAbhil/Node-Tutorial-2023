@@ -2,28 +2,48 @@ import { ThemeProvider } from '@mui/material';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import Layout from './components/layout/layout';
 import PreLoginLayout from './components/pre-login-layout/pre-login-layout';
+import AppContext from './hooks/app-context';
+import useAppReducer from './hooks/app-reducer';
 import AllPosts from './pages/allposts/all-posts';
 import Dashboard from './pages/dashboard/dashboard';
 import Login from './pages/login';
 import Register from './pages/register';
+import ProtectedRoute from './routes/protected-route';
 import Theme from './theme';
 import './utils/interceptor';
 
 function App() {
+	const { appState, dispatch } = useAppReducer();
 	return (
 		<ThemeProvider theme={Theme}>
-			<BrowserRouter>
-				<Routes>
-					<Route path="/auth" element={<PreLoginLayout />}>
-						<Route path="login" index element={<Login />} />
-						<Route path="register" index element={<Register />} />
-					</Route>
-					<Route path="/" element={<Layout />}>
-						<Route path="dashboard" element={<Dashboard />} />
-						<Route path="posts" element={<AllPosts />} />
-					</Route>
-				</Routes>
-			</BrowserRouter>
+			<AppContext.Provider value={{ dispatch, appState }}>
+				<BrowserRouter>
+					<Routes>
+						<Route path="/auth" element={<PreLoginLayout />}>
+							<Route path="login" index element={<Login />} />
+							<Route path="register" index element={<Register />} />
+						</Route>
+						<Route path="/" element={<Layout />}>
+							<Route
+								path="dashboard"
+								element={
+									<ProtectedRoute token={appState.token}>
+										<Dashboard />
+									</ProtectedRoute>
+								}
+							/>
+							<Route
+								path="posts"
+								element={
+									<ProtectedRoute token={appState.token}>
+										<AllPosts />
+									</ProtectedRoute>
+								}
+							/>
+						</Route>
+					</Routes>
+				</BrowserRouter>
+			</AppContext.Provider>
 		</ThemeProvider>
 	);
 }

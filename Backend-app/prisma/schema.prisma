@@ -17,7 +17,7 @@ model users {
 }
 
 model posts {
-  post_id Int    @id
+  post_id Int    @id @default(autoincrement())
   title   String @db.VarChar(45)
   body    String @db.VarChar(200)
   user_id Int?

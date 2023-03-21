@@ -12,7 +12,20 @@ const loginSchema = yup.object().shape({
 	password: yup.string().required(),
 });
 
+const addPostSchema = yup.object().shape({
+	body: yup.string().required(),
+	title: yup.string().required(),
+});
+
+const updatePostSchema = yup.object().shape({
+	body: yup.string().required(),
+	title: yup.string().required(),
+	post_id: yup.number().required(),
+});
+
 module.exports = {
 	registrationSchema,
 	loginSchema,
+	addPostSchema,
+	updatePostSchema,
 };
