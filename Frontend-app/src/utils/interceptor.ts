@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const imageHandlingAPIRoutes: string[] = ['/update-profile-pic'];
+const imageHandlingAPIRoutes: string[] = ['/app/profile-pic'];
 axios.interceptors.request.use((req: any) => {
 	req.baseURL = import.meta.env.VITE_PUBLIC_BASE_URL;
 	req.headers = {
@@ -9,6 +9,9 @@ axios.interceptors.request.use((req: any) => {
 		'content-type': 'application/json',
 		'Access-Control-Allow-Methods': 'GET, POST, PUT, PATCH, DELETE',
 	};
+	if (imageHandlingAPIRoutes.includes(req.url)) {
+		req.headers['content-type'] = 'multipart/form-data';
+	}
 	if (req.url.startsWith('/app/')) {
 		const token = localStorage.getItem('AUTH_USER');
 		req.headers.Authorization = `Bearer ${token}`;

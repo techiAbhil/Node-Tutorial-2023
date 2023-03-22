@@ -12,6 +12,7 @@ import JWT from 'jwt-decode';
 import React, { useCallback, useEffect, useState } from 'react';
 import BlackPanther from '../../assets/black-panther.jpg';
 import CustomFormikField from '../../components/CustomFormikField';
+import AppContext from '../../hooks/app-context';
 import { COLOR_CODES } from '../../utils/constants';
 import ProfilePicUpload from './upload-profile-pic';
 
@@ -22,23 +23,12 @@ const Profile = () => {
 	const [userDetails, setUserDetails] = useState<any>(null);
 	const [openProfileUploadDialog, setOpenProfileUploadDialog] =
 		useState<boolean>(false);
+	const { dispatch } = React.useContext(AppContext);
 
 	useEffect(() => {
 		const token = localStorage.getItem('AUTH_USER');
 		const decoded = JWT(token ?? '');
 		setUserDetails(decoded);
-	}, []);
-
-	const submitHandler = React.useCallback(async (values: any) => {
-		try {
-			const data: any = await axios.post('/auth/register', values);
-			console.log('api response = ', data);
-			setShowLoader(false);
-			alert('Registration Successful, Please login...!');
-		} catch (e: any) {
-			setShowLoader(false);
-			alert(e?.message ?? 'Something went wrong!');
-		}
 	}, []);
 
 	const [error, setError] = useState<string | undefined>(undefined);
@@ -66,6 +56,24 @@ const Profile = () => {
 			setSuccessMsg('Post has been successfully added...!');
 		} else {
 			setErrorMsg('Something went wrong while adding post...!');
+		}
+	}, []);
+
+	const submitHandler = React.useCallback(async (values: any) => {
+		try {
+			const { token }: any = await axios.put('/app/user', values);
+			if (token) {
+				dispatch({ type: 'SET_TOKEN', payload: token });
+				localStorage.setItem('AUTH_USER', token);
+				setShowLoader(false);
+				setSuccessMsg('User details successfully updated...!');
+				window.location.reload();
+			} else {
+				throw new Error('Something went wrong...!');
+			}
+		} catch (e: any) {
+			setShowLoader(false);
+			setErrorMsg(e?.message ?? 'Something went wrong!');
 		}
 	}, []);
 	return (

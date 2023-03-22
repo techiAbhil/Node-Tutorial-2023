@@ -8,6 +8,7 @@ import {
 import axios from 'axios';
 import React, { useCallback, useState } from 'react';
 import { useDropzone } from 'react-dropzone';
+import AppContext from '../../hooks/app-context';
 import { COLOR_CODES } from '../../utils/constants';
 
 const TOAST_TIMER = 3000;
@@ -24,6 +25,7 @@ const ProfilePicUpload = ({
 
 	const [error, setError] = useState<string | undefined>(undefined);
 	const [success, setSuccess] = useState<string | undefined>(undefined);
+	const { dispatch } = React.useContext(AppContext);
 
 	const setErrorMsg = useCallback((error_msg: string) => {
 		setError(error_msg);
@@ -53,12 +55,18 @@ const ProfilePicUpload = ({
 				formData.append('profile_pic', acceptedFiles[0]);
 
 				const {
-					data: { updatedToken },
-				} = await axios.patch('/update-profile-pic', formData);
-				// const userDetails =
-				//     updateUserLocalStorageStateByToken(updatedToken);
-				setShowLoader(false);
-				submitResponseHandler(false);
+					data: { token },
+				} = await axios.put('/app/profile-pic', formData);
+
+				if (token) {
+					dispatch({ type: 'SET_TOKEN', payload: token });
+					localStorage.setItem('AUTH_USER', token);
+					setShowLoader(false);
+					setSuccessMsg('User details successfully updated...!');
+					window.location.reload();
+				} else {
+					throw new Error('Something went wrong...!');
+				}
 			} catch (e) {
 				setShowLoader(false);
 				setErrorMsg('Could not update the image...!');

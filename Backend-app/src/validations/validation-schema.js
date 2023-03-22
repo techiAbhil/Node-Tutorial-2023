@@ -23,9 +23,16 @@ const updatePostSchema = yup.object().shape({
 	post_id: yup.number().required(),
 });
 
+const updateUserSchema = yup.object().shape({
+	email: yup.string().required().email(),
+	first_name: yup.string().required(),
+	last_name: yup.string().required(),
+});
+
 module.exports = {
 	registrationSchema,
 	loginSchema,
 	addPostSchema,
 	updatePostSchema,
+	updateUserSchema,
 };

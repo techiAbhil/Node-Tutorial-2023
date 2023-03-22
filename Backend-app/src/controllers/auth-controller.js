@@ -15,6 +15,7 @@ const register = async (req, res) => {
 			first_name: params.first_name,
 			last_name: params.last_name,
 			password: encryptedPassword,
+			profile_pic: '',
 		},
 	});
 	res.status(201).json({
