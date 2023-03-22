@@ -7,6 +7,7 @@ import useAppReducer from './hooks/app-reducer';
 import AllPosts from './pages/allposts/all-posts';
 import Dashboard from './pages/dashboard/dashboard';
 import Login from './pages/login';
+import Profile from './pages/profile/profile';
 import Register from './pages/register';
 import ProtectedRoute from './routes/protected-route';
 import Theme from './theme';
@@ -37,6 +38,14 @@ function App() {
 								element={
 									<ProtectedRoute>
 										<AllPosts />
+									</ProtectedRoute>
+								}
+							/>
+							<Route
+								path="profile"
+								element={
+									<ProtectedRoute>
+										<Profile />
 									</ProtectedRoute>
 								}
 							/>
