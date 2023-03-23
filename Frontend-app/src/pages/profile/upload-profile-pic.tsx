@@ -54,15 +54,14 @@ const ProfilePicUpload = ({
 				const formData = new FormData();
 				formData.append('profile_pic', acceptedFiles[0]);
 
-				const {
-					data: { token },
-				} = await axios.put('/app/profile-pic', formData);
+				const data: any = await axios.put('/app/profile-pic', formData);
+				const token = data?.token ?? null;
 				if (token) {
 					dispatch({ type: 'SET_TOKEN', payload: token });
 					localStorage.setItem('AUTH_USER', token);
 					setShowLoader(false);
-					setSuccessMsg('User details successfully updated...!');
-					window.location.reload();
+					setSuccessMsg('User profile pic successfully updated...!');
+					submitResponseHandler(true);
 				} else {
 					throw new Error('Something went wrong...!');
 				}
