@@ -55,11 +55,15 @@ const deletePost = async (req, res) => {
 const getPostByUser = async (req, res) => {
 	const { user } = req;
 
-	const posts = await prisma.posts.findMany({
-		where: {
-			user_id: user.user_id,
-		},
-	});
+	const posts =
+		await prisma.$queryRaw`select * from posts where user_id=${user.user_id}`;
+
+	console.log('raw query posts = ', posts);
+	// const posts = await prisma.posts.findMany({
+	// 	where: {
+	// 		user_id: user.user_id,
+	// 	},
+	// });
 	res.status(200).json({
 		msg: 'Success',
 		success: true,

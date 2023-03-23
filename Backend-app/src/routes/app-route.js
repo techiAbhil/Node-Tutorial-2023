@@ -16,7 +16,7 @@ const {
 	updateUserDetails,
 	uploadUserProfilePic,
 } = require('../controllers/user-controller');
-const profileUploadMiddleware = require('../middleware/image-upload');
+const profileUploadMiddleware = require('../middlewares/image-upload');
 const schemaMiddleware = require('../validations/validation-middleware');
 
 route.post('/post', schemaMiddleware(addPostSchema), addPost);
