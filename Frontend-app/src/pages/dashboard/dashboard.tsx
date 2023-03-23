@@ -38,7 +38,7 @@ export default function Dashboard() {
 
 	const getPostsForUser = useCallback(async () => {
 		const { posts }: any = await axios.get('/app/post');
-		setRows(posts);
+		if (Array.isArray(posts)) setRows(posts);
 	}, []);
 
 	useEffect(() => {
