@@ -46,6 +46,7 @@ export default function ProfileMenu() {
 			>
 				<MenuItem onClick={() => handleClose('/dashboard')}>Dashboard</MenuItem>
 				<MenuItem onClick={() => handleClose('/posts')}>Posts</MenuItem>
+				<MenuItem onClick={() => handleClose('/profile')}>Profile</MenuItem>
 				<MenuItem onClick={() => setIsOpenModal(true)}>Logout</MenuItem>
 			</Menu>
 

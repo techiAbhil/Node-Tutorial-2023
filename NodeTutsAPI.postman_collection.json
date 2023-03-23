@@ -1,0 +1,323 @@
+{
+	"info": {
+		"_postman_id": "a7836dcc-b4ce-4d0f-a579-d23091900a06",
+		"name": "NodeTutsAPI",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "18753554"
+	},
+	"item": [
+		{
+			"name": "Registration",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \r\n    \"first_name\": \"Tony\",\r\n    \"last_name\": \"Stark\",\r\n    \"password\": \"Test@123\",\r\n    \"email\": \"Tony@gmail.com\"\r\n\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{node_tuts_base_url}}/auth/register",
+					"host": [
+						"{{node_tuts_base_url}}"
+					],
+					"path": [
+						"auth",
+						"register"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Upload Profile Pic",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoxLCJmaXJzdF9uYW1lIjoiSm9obiIsImxhc3RfbmFtZSI6IkNlbmEiLCJlbWFpbCI6ImpvaG5AZG9lLmNvbSIsImlhdCI6MTY3OTQ5NDEwM30.3WJ1tvgi6YjeCfBKy7cU132KpunZ-2XklVf7Od2QRK8",
+							"type": "string"
+						}
+					]
+				},
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "profile_pic",
+							"type": "file",
+							"src": "/C:/Users/vicky/Pictures/Profile Pics/captain-america.jpg"
+						}
+					]
+				},
+				"url": {
+					"raw": "{{node_tuts_base_url}}/app/profile-pic",
+					"host": [
+						"{{node_tuts_base_url}}"
+					],
+					"path": [
+						"app",
+						"profile-pic"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Login",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"email\": \"Tony@gmail.com\",\r\n    \"password\": \"Test@123\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{node_tuts_base_url}}/auth/login",
+					"host": [
+						"{{node_tuts_base_url}}"
+					],
+					"path": [
+						"auth",
+						"login"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "ALL Posts",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoxLCJmaXJzdF9uYW1lIjoiVG9ueSIsImxhc3RfbmFtZSI6IlN0YXJrIiwiZW1haWwiOiJUb255QGdtYWlsLmNvbSIsInByb2ZpbGVfcGljIjoicHJvZmlsZV9waWMtMTY3OTU4NzQ3ODY3Ni03MzY2MDgzNjEuanBnIiwiaWF0IjoxNjc5NTg4ODE0fQ.cbhQ35h0Mn4gv4HCDFegWGZC1eAxjTal_Vc7HST2si0",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"email\": \"john@doe.com\",\r\n    \"password\": \"Test@123\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{node_tuts_base_url}}/app/post/all",
+					"host": [
+						"{{node_tuts_base_url}}"
+					],
+					"path": [
+						"app",
+						"post",
+						"all"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Post By user id",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoxLCJmaXJzdF9uYW1lIjoiVG9ueSIsImxhc3RfbmFtZSI6IlN0YXJrIiwiZW1haWwiOiJUb255QGdtYWlsLmNvbSIsInByb2ZpbGVfcGljIjoicHJvZmlsZV9waWMtMTY3OTU4NzQ3ODY3Ni03MzY2MDgzNjEuanBnIiwiaWF0IjoxNjc5NTg4ODE0fQ.cbhQ35h0Mn4gv4HCDFegWGZC1eAxjTal_Vc7HST2si0",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"email\": \"john@doe.com\",\r\n    \"password\": \"Test@123\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{node_tuts_base_url}}/app/post",
+					"host": [
+						"{{node_tuts_base_url}}"
+					],
+					"path": [
+						"app",
+						"post"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Add Post",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoxLCJmaXJzdF9uYW1lIjoiVG9ueSIsImxhc3RfbmFtZSI6IlN0YXJrIiwiZW1haWwiOiJUb255QGdtYWlsLmNvbSIsInByb2ZpbGVfcGljIjoiIiwiaWF0IjoxNjc5NTQ4NjQxfQ.Fnlf5sq_g6ygn7WrvjcK1YcELKbxmyBl1ExZ5Cd2wtw",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n   \"title\": \"Postman\",\r\n   \"body\": \"Test from postman...!\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{node_tuts_base_url}}/app/post",
+					"host": [
+						"{{node_tuts_base_url}}"
+					],
+					"path": [
+						"app",
+						"post"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Update Post",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoxLCJmaXJzdF9uYW1lIjoiVG9ueSIsImxhc3RfbmFtZSI6IlN0YXJrIiwiZW1haWwiOiJUb255QGdtYWlsLmNvbSIsInByb2ZpbGVfcGljIjoiIiwiaWF0IjoxNjc5NTQ4NjQxfQ.Fnlf5sq_g6ygn7WrvjcK1YcELKbxmyBl1ExZ5Cd2wtw",
+							"type": "string"
+						}
+					]
+				},
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n   \"title\": \"Postman\",\r\n   \"body\": \"Test from updated postman...!\",\r\n   \"post_id\": 5\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{node_tuts_base_url}}/app/post",
+					"host": [
+						"{{node_tuts_base_url}}"
+					],
+					"path": [
+						"app",
+						"post"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Update Post Copy",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoxLCJmaXJzdF9uYW1lIjoiVG9ueSIsImxhc3RfbmFtZSI6IlN0YXJrIiwiZW1haWwiOiJUb255QGdtYWlsLmNvbSIsInByb2ZpbGVfcGljIjoiIiwiaWF0IjoxNjc5NTQ4NjQxfQ.Fnlf5sq_g6ygn7WrvjcK1YcELKbxmyBl1ExZ5Cd2wtw",
+							"type": "string"
+						}
+					]
+				},
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "{{node_tuts_base_url}}/app/post/4",
+					"host": [
+						"{{node_tuts_base_url}}"
+					],
+					"path": [
+						"app",
+						"post",
+						"4"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Update User",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoxLCJmaXJzdF9uYW1lIjoiVG9ueSIsImxhc3RfbmFtZSI6IlN0YXJrIiwiZW1haWwiOiJUb255QGdtYWlsLmNvbSIsInByb2ZpbGVfcGljIjoiIiwiaWF0IjoxNjc5NTQ4NjQxfQ.Fnlf5sq_g6ygn7WrvjcK1YcELKbxmyBl1ExZ5Cd2wtw",
+							"type": "string"
+						}
+					]
+				},
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\"email\":\"Tony@gmail.com\",\"first_name\":\"Tony\",\"last_name\":\"Stark\"}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{node_tuts_base_url}}/app/user",
+					"host": [
+						"{{node_tuts_base_url}}"
+					],
+					"path": [
+						"app",
+						"user"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
