@@ -18,7 +18,7 @@ server.use([
 		next();
 	},
 ]);
-
+server.use('/assets', express.static('./assets'));
 server.use('/api/v1/auth', auth_route);
 server.use('/api/v1/app', jwtMiddleware, app_route);
 

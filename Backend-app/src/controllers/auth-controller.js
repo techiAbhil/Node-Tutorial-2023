@@ -18,6 +18,7 @@ const register = async (req, res) => {
 			profile_pic: '',
 		},
 	});
+	delete user.password;
 	res.status(201).json({
 		msg: 'user successfully regisrtred...!',
 		success: true,

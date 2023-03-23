@@ -57,7 +57,6 @@ const ProfilePicUpload = ({
 				const {
 					data: { token },
 				} = await axios.put('/app/profile-pic', formData);
-
 				if (token) {
 					dispatch({ type: 'SET_TOKEN', payload: token });
 					localStorage.setItem('AUTH_USER', token);

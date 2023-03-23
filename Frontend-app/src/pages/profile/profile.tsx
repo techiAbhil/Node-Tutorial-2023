@@ -9,7 +9,7 @@ import {
 import axios from 'axios';
 import { Form, Formik } from 'formik';
 import JWT from 'jwt-decode';
-import React, { useCallback, useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useMemo, useState } from 'react';
 import BlackPanther from '../../assets/black-panther.jpg';
 import CustomFormikField from '../../components/CustomFormikField';
 import AppContext from '../../hooks/app-context';
@@ -25,10 +25,14 @@ const Profile = () => {
 		useState<boolean>(false);
 	const { dispatch } = React.useContext(AppContext);
 
-	useEffect(() => {
+	const refreshForm = () => {
 		const token = localStorage.getItem('AUTH_USER');
 		const decoded = JWT(token ?? '');
 		setUserDetails(decoded);
+	};
+
+	useEffect(() => {
+		refreshForm();
 	}, []);
 
 	const [error, setError] = useState<string | undefined>(undefined);
@@ -52,6 +56,7 @@ const Profile = () => {
 
 	const profileUploadResponseHandler = useCallback((isSUccess: boolean) => {
 		if (isSUccess) {
+			refreshForm();
 			setOpenProfileUploadDialog(false);
 			setSuccessMsg('Post has been successfully added...!');
 		} else {
@@ -67,7 +72,9 @@ const Profile = () => {
 				localStorage.setItem('AUTH_USER', token);
 				setShowLoader(false);
 				setSuccessMsg('User details successfully updated...!');
-				window.location.reload();
+				refreshForm();
+
+				// window.location.reload();
 			} else {
 				throw new Error('Something went wrong...!');
 			}
@@ -76,6 +83,13 @@ const Profile = () => {
 			setErrorMsg(e?.message ?? 'Something went wrong!');
 		}
 	}, []);
+
+	const porileImgSrc = useMemo(() => {
+		if (userDetails?.profile_pic) {
+			return `${import.meta.env.VITE_ASSETS_URL}/${userDetails?.profile_pic}`;
+		}
+		return BlackPanther;
+	}, [userDetails?.profile_pic]);
 	return (
 		<Box
 			sx={{
@@ -119,7 +133,8 @@ const Profile = () => {
 								onClick={() => setOpenProfileUploadDialog(true)}
 							>
 								<img
-									src={BlackPanther}
+									alt="Profile Pic"
+									src={porileImgSrc}
 									style={{
 										width: '150px',
 										height: '150px',
