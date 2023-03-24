@@ -80,6 +80,7 @@ const getAllPosts = async (req, res) => {
                     first_name: true,
                     last_name: true,
                     user_id: true,
+                    profile_pic: true,
                 },
             },
         },

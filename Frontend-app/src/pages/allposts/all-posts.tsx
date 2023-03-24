@@ -85,7 +85,13 @@ export default function AllPosts() {
 											>
 												<CardMedia
 													sx={{ height: 150, width: 150, borderRadius: '50%' }}
-													image={DefaultImg}
+													image={
+														row?.users?.profile_pic
+															? `${import.meta.env.VITE_ASSETS_URL}/${
+																	row?.users?.profile_pic
+															  }`
+															: DefaultImg
+													}
 													title="green iguana"
 												/>
 											</Box>
